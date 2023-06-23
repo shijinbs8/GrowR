@@ -1,0 +1,634 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Grow</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="{% static 'vendors/feather/feather.css' %}">
+  <link rel="stylesheet" href="{% static 'vendors/ti-icons/css/themify-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.base.css' %}">
+
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="{% static 'vendors/datatables.net-bs4/dataTables.bootstrap4.css' %}">
+  <link rel="stylesheet" href="{% static 'vendors/ti-icons/css/themify-icons.css' %}">
+  <link rel="stylesheet" type="text/css" href="">
+  <style>
+.box-style {
+    display: inline-block;
+    padding: 10px;
+    margin: 10px;
+    background-color: #bada55;
+    border: 4px solid #ddd;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #333;
+    margin: 40px 40px;
+  }
+  input[type=checkbox] {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+  }
+  .hidden {
+      display: none;
+    }
+
+  label {
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 80px; /* Adjust the width as desired */
+    height: 40px; /* Adjust the height as desired */
+    background: grey;
+    display: block;
+    border-radius: 100px;
+    position: relative;
+    margin: 40px 30px;
+  }
+
+  label:after {
+    content: '';
+    position: absolute;
+    top: 3px; /* Adjust the top position as desired */
+    left: 3px; /* Adjust the left position as desired */
+    width: 34px; /* Adjust the width as desired */
+    height: 34px; /* Adjust the height as desired */
+    background: #fff;
+    border-radius: 34px;
+    transition: 0.3s;
+  }
+
+  input:checked + label {
+    background: #bada55;
+  }
+
+  input:checked + label:after {
+    left: calc(100% - 3px);
+    transform: translateX(-100%);
+  }
+
+  label:active:after {
+    width: 50px; /* Adjust the active width as desired */
+  }
+h4 {
+    margin-top: 10px; /* Adjust the spacing between switches and headings as desired */
+    position: relative;
+    margin: 40px 60px;
+  }
+</style>
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="{% static 'css/vertical-layout-light/style.css' %}">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="" />
+</head>
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <a class="navbar-brand brand-logo mr-5" href="/index"><img src="{% static 'Grow Logo.png' %}" class="mr-2"></a>
+
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+          <span class="icon-menu"></span>
+        </button>
+
+        <ul class="navbar-nav mr-lg-2">
+          <li class="nav-item nav-search d-none d-lg-block">
+            <div class="input-group">
+              <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                <span class="input-group-text" id="search">
+                  <i class="icon-search"></i>
+                </span>
+              </div>
+              <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+            </div>
+          </li>
+        </ul>
+
+
+        <ul class="navbar-nav navbar-nav-right">
+
+          <li class="nav-item nav-profile dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+
+              <img src="{% static 'images/faces/face28.jpg' %}" alt="profile"/>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+              <a class="dropdown-item">
+                <i class="ti-settings text-primary"></i>
+                Settings
+              </a>
+              <a class="dropdown-item">
+                <i class="ti-power-off text-primary"></i>
+                Logout
+              </a>
+            </div>
+          </li>
+          <li class="nav-item nav-settings d-none d-lg-flex">
+            <a class="nav-link" href="#">
+              <i class="icon-ellipsis"></i>
+            </a>
+          </li>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+          <span class="icon-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_settings-panel.html -->
+      <div class="theme-setting-wrapper">
+        <div id="settings-trigger"><i class="ti-settings"></i></div>
+        <div id="theme-settings" class="settings-panel">
+          <i class="settings-close ti-close"></i>
+          <p class="settings-heading">SIDEBAR SKINS</p>
+          <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Light</div>
+          <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark</div>
+          <p class="settings-heading mt-2">HEADER SKINS</p>
+          <div class="color-tiles mx-0 px-4">
+            <div class="tiles success"></div>
+            <div class="tiles warning"></div>
+            <div class="tiles danger"></div>
+            <div class="tiles info"></div>
+            <div class="tiles dark"></div>
+            <div class="tiles default"></div>
+          </div>
+        </div>
+      </div>
+      <div id="right-sidebar" class="settings-panel">
+        <i class="settings-close ti-close"></i>
+        <ul class="nav nav-tabs border-top" id="setting-panel" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="todo-tab" data-toggle="tab" href="#todo-section" role="tab" aria-controls="todo-section" aria-expanded="true">TO DO LIST</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="chats-tab" data-toggle="tab" href="#chats-section" role="tab" aria-controls="chats-section">CHATS</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="setting-content">
+          <div class="tab-pane fade show active scroll-wrapper" id="todo-section" role="tabpanel" aria-labelledby="todo-section">
+            <div class="add-items d-flex px-3 mb-0">
+              <form class="form w-100">
+                <div class="form-group d-flex">
+                  <input type="text" class="form-control todo-list-input" placeholder="Add To-do">
+                  <button type="submit" class="add btn btn-primary todo-list-add-btn" id="add-task">Add</button>
+                </div>
+              </form>
+            </div>
+            <div class="list-wrapper px-3">
+              <ul class="d-flex flex-column-reverse todo-list">
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox">
+                      Team review meeting at 3.00 PM
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox">
+                      Prepare for presentation
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox">
+                      Resolve all the low priority tickets due today
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li class="completed">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox" checked>
+                      Schedule meeting for next week
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li class="completed">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox" checked>
+                      Project review
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+              </ul>
+            </div>
+            <h4 class="px-3 text-muted mt-5 font-weight-light mb-0">Events</h4>
+            <div class="events pt-4 px-3">
+              <div class="wrapper d-flex mb-2">
+                <i class="ti-control-record text-primary mr-2"></i>
+                <span>Feb 11 2018</span>
+              </div>
+              <p class="mb-0 font-weight-thin text-gray">Creating component page build a js</p>
+              <p class="text-gray mb-0">The total number of sessions</p>
+            </div>
+            <div class="events pt-4 px-3">
+              <div class="wrapper d-flex mb-2">
+                <i class="ti-control-record text-primary mr-2"></i>
+                <span>Feb 7 2018</span>
+              </div>
+              <p class="mb-0 font-weight-thin text-gray">Meeting with Alisa</p>
+              <p class="text-gray mb-0 ">Call Sarah Graves</p>
+            </div>
+          </div>
+          <!-- To do section tab ends -->
+          <div class="tab-pane fade" id="chats-section" role="tabpanel" aria-labelledby="chats-section">
+            <div class="d-flex align-items-center justify-content-between border-bottom">
+              <p class="settings-heading border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Friends</p>
+              <small class="settings-heading border-top-0 mb-3 pt-0 border-bottom-0 pb-0 pr-3 font-weight-normal">See All</small>
+            </div>
+            <ul class="chat-list">
+              <li class="list active">
+                <div class="profile"><img src="{% static 'images/faces/face1.jpg' %}" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Thomas Douglas</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">19 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="{% static 'images/faces/face2.jpg' %}" alt="image"><span class="offline"></span></div>
+                <div class="info">
+                  <div class="wrapper d-flex">
+                    <p>Catherine</p>
+                  </div>
+                  <p>Away</p>
+                </div>
+                <div class="badge badge-success badge-pill my-auto mx-2">4</div>
+                <small class="text-muted my-auto">23 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="{% static 'images/faces/face3.jpg' %}" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Daniel Russell</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">14 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="{% static 'images/faces/face4.jpg' %}" alt="image"><span class="offline"></span></div>
+                <div class="info">
+                  <p>James Richardson</p>
+                  <p>Away</p>
+                </div>
+                <small class="text-muted my-auto">2 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="{% static 'images/faces/face5.jpg' %}" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Madeline Kennedy</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">5 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="{% static 'images/faces/face6.jpg' %}" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Sarah Graves</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">47 min</small>
+              </li>
+            </ul>
+          </div>
+          <!-- chat tab ends -->
+        </div>
+      </div>
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/index">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"  href="">
+              <i class="icon-paper menu-icon"></i>
+              <span class="menu-title">Automation</span>
+              <i></i>
+            </a>
+          </li>
+
+           <li class="nav-item">
+            <a class="nav-link"href="">
+              <i class="icon-grid-2 menu-icon"></i>
+              <span class="menu-title">Peak Time Analyzer</span>
+
+            </a>
+            <div class="collapse" id="tables">
+            </div>
+          </li>
+                <li class="nav-item">
+            <a class="nav-link"  href="">
+              <i class="icon-paper menu-icon"></i>
+              <span class="menu-title">Smart Staff Allocator</span>
+
+            </a>
+            <div class="collapse" id="form-elements">
+
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="">
+              <i class="icon-paper menu-icon"></i>
+              <span class="menu-title">Staff Attendance</span>
+            </a>
+          </li>
+              <li class="nav-item">
+            <a class="nav-link" href="">
+              <i class="icon-contract menu-icon"></i>
+              <span class="menu-title">Vip Customer</span>
+
+            </a>
+            <div class="collapse">
+            </div>
+          </li>
+
+        </ul>
+        <script>
+</script>
+
+      </nav>
+
+      <!-- partial -->
+      <div class="main-panel">
+          <div class="content-wrapper">
+         <div>
+          <hr>
+          <h2>Automation</h2>
+         <div class="row">
+  <a href="#" onclick="toggleDiv(1); return false;" class="box-style">Floor 1</a>
+  <a href="#" onclick="toggleDiv(2); return false;" class="box-style">Floor 2</a>
+  <a href="#" onclick="toggleDiv(3); return false;" class="box-style">Floor 3</a>
+  <a href="#" onclick="toggleDiv(4); return false;" class="box-style">Floor 4</a>
+</div>
+
+  <div id="div1" class="hidden">
+    <h3>Floor 1</h3>
+    <div class="row">
+      <br>
+          <input type="checkbox" id="switch" /><label for="switch">Toggle</label>
+          <input type="checkbox" id="switch1" /><label for="switch1">Toggle</label>
+          <input type="checkbox" id="switch2" /><label for="switch2">Toggle</label>
+          <input type="checkbox" id="switch3" /><label for="switch3">Toggle</label>
+          <input type="checkbox" id="switch4" /><label for="switch4">Toggle</label>
+          <input type="checkbox" id="switch5" /><label for="switch5">Toggle</label>
+          <input type="checkbox" id="switch6" /><label for="switch6">Toggle</label>
+      <!-- Checkbox and label elements -->
+    </div>
+
+      <div class="row">
+       <br>
+            <input type="checkbox" id="switch7" /><label for="switch7">Toggle</label>
+          <input type="checkbox" id="switch8" /><label for="switch8">Toggle</label>
+          <input type="checkbox" id="switch9" /><label for="switch9">Toggle</label>
+          <input type="checkbox" id="switch10" /><label for="switch10">Toggle</label>
+          <input type="checkbox" id="switch11" /><label for="switch11">Toggle</label>
+          <input type="checkbox" id="switch12" /><label for="switch12">Toggle</label>
+          <input type="checkbox" id="switch13" /><label for="switch13">Toggle</label>
+
+      <!-- Checkbox and label elements -->
+    </div>
+
+     <div class="row">
+      <br>
+          <input type="checkbox" id="switch14" /><label for="switch14">Toggle</label>
+          <input type="checkbox" id="switch15" /><label for="switch15">Toggle</label>
+          <input type="checkbox" id="switch16" /><label for="switch16">Toggle</label>
+          <input type="checkbox" id="switch17" /><label for="switch17">Toggle</label>
+          <input type="checkbox" id="switch18" /><label for="switch18">Toggle</label>
+          <input type="checkbox" id="switch19" /><label for="switch19">Toggle</label>
+          <input type="checkbox" id="switch20" /><label for="switch20">Toggle</label>
+      <!-- Checkbox and label elements -->
+    </div>
+
+  </div>
+
+  <div id="div2" class="hidden">
+    <h3>Floor 2</h3>
+    <div class="row">
+       <br>
+            <input type="checkbox" id="switch21" /><label for="switch21">Toggle</label>
+          <input type="checkbox" id="switch22" /><label for="switch22">Toggle</label>
+          <input type="checkbox" id="switch23" /><label for="switch23">Toggle</label>
+          <input type="checkbox" id="switch24" /><label for="switch24">Toggle</label>
+          <input type="checkbox" id="switch25" /><label for="switch25">Toggle</label>
+          <input type="checkbox" id="switch26" /><label for="switch26">Toggle</label>
+          <input type="checkbox" id="switch27" /><label for="switch27">Toggle</label>
+
+      <!-- Checkbox and label elements -->
+    </div>
+
+       <div class="row">
+      <br>
+          <input type="checkbox" id="switch28" /><label for="switch28">Toggle</label>
+          <input type="checkbox" id="switch29" /><label for="switch29">Toggle</label>
+          <input type="checkbox" id="switch30" /><label for="switch30">Toggle</label>
+          <input type="checkbox" id="switch31" /><label for="switch31">Toggle</label>
+          <input type="checkbox" id="switch32" /><label for="switch32">Toggle</label>
+          <input type="checkbox" id="switch33" /><label for="switch33">Toggle</label>
+          <input type="checkbox" id="switch34" /><label for="switch34">Toggle</label>
+      <!-- Checkbox and label elements -->
+    </div>
+
+    <div class="row">
+      <br>
+          <input type="checkbox" id="switch35" /><label for="switch35">Toggle</label>
+          <input type="checkbox" id="switch36" /><label for="switch36">Toggle</label>
+          <input type="checkbox" id="switch37" /><label for="switch37">Toggle</label>
+          <input type="checkbox" id="switch38" /><label for="switch38">Toggle</label>
+          <input type="checkbox" id="switch39" /><label for="switch39">Toggle</label>
+          <input type="checkbox" id="switch40" /><label for="switch40">Toggle</label>
+          <input type="checkbox" id="switch41" /><label for="switch41">Toggle</label>
+      <!-- Checkbox and label elements -->
+    </div>
+
+
+  </div>
+
+  <div id="div3" class="hidden">
+    <h3>Floor 3</h3>
+    <div class="row">
+      <br><input type="checkbox" id="switch42">
+            <label for="switch42">Toggle</label>
+            <input type ="checkbox" id="switch43">
+            <label for="switch43">Toggle</label>
+            <input type ="checkbox" id="switch44">
+            <label for="switch44">Toggle</label>
+            <input type ="checkbox" id="switch45">
+            <label for="switch45">Toggle</label>
+            <input type ="checkbox" id="switch46">
+            <label for="switch46">Toggle</label>
+            <input type ="checkbox" id="switch47">
+            <label for="switch47">Toggle</label>
+            <input type ="checkbox" id="switch48">
+            <label for="switch48">Toggle</label>
+    </div>
+
+        <div class="row">
+      <br><input type ="checkbox" id="switch49">
+<label for="switch49">Toggle</label>
+<input type ="checkbox" id="switch50">
+<label for="switch50">Toggle</label>
+<input type ="checkbox" id="switch51">
+<label for="switch51">Toggle</label>
+<input type ="checkbox" id="switch52">
+<label for="switch52">Toggle</label>
+<input type ="checkbox" id="switch53">
+<label for="switch53">Toggle</label>
+<input type ="checkbox" id="switch54">
+<label for="switch54">Toggle</label>
+<input type ="checkbox" id="switch55">
+<label for="switch55">Toggle</label>
+              </div>
+
+      <div class="row">
+          <input type ="checkbox" id="switch56">
+      <br><label for="switch56">Toggle</label>
+<input type ="checkbox" id="switch57">
+<label for="switch57">Toggle</label>
+<input type ="checkbox" id="switch58">
+<label for="switch58">Toggle</label>
+<input type ="checkbox" id="switch59">
+<label for="switch59">Toggle</label>
+<input type ="checkbox" id="switch60">
+<label for="switch60">Toggle</label>
+<input type ="checkbox" id="switch61">
+<label for="switch61">Toggle</label>
+<input type ="checkbox" id="switch62">
+<label for="switch62">Toggle</label>
+      </div>
+
+  </div>
+
+  <div id="div4" class="hidden">
+    <h3>Floor 4</h3>
+
+
+       <div class="row">
+       <br>
+            <input type ="checkbox" id="switch70">
+<label for="switch70">Toggle</label>
+<input type ="checkbox" id="switch71">
+<label for="switch71">Toggle</label>
+<input type ="checkbox" id="switch72">
+<label for="switch72">Toggle</label>
+<input type="checkbox" id="switch73">
+<label for="switch73">Toggle</label>
+<input type ="checkbox" id="switch74">
+<label for="switch74">Toggle</label>
+<input type ="checkbox" id="switch75">
+<label for="switch75">Toggle</label>
+<input type ="checkbox" id="switch76">
+<label for="switch76">Toggle</label>
+
+
+    </div>
+
+       <div class="row">
+       <br>
+           <input type ="checkbox" id="switch77">
+<label for="switch77">Toggle</label>
+<input type ="checkbox" id="switch78">
+<label for="switch78">Toggle</label>
+<input type ="checkbox" id="switch79">
+<label for="switch79">Toggle</label>
+<input type ="checkbox" id="switch80">
+<label for="switch80">Toggle</label>
+<input type ="checkbox" id="switch81">
+<label for="switch81">Toggle</label>
+<input type ="checkbox" id="switch82">
+<label for="switch82">Toggle</label>
+<input type ="checkbox" id="switch83">
+<label for="switch83">Toggle</label>
+    </div>
+
+  </div>
+        </div>
+
+          </div>
+
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021. All rights reserved.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+
+  <!-- plugins:js -->
+     <script>
+    var currentDivId = null;
+
+    function toggleDiv(divId) {
+      var div = document.getElementById('div' + divId);
+
+      if (currentDivId !== null) {
+        var currentDiv = document.getElementById('div' + currentDivId);
+        currentDiv.classList.add('hidden');
+      }
+
+      if (currentDivId === divId) {
+        currentDivId = null;
+      } else {
+        div.classList.remove('hidden');
+        currentDivId = divId;
+      }
+    }
+  </script>
+  <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="{% static 'vendors/chart.js/Chart.min.js' %}"></script>
+  <script src=""></script>
+  <script src=""></script>
+  <script src=""></script>
+
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+
+  <script src="{% static 'js/hoverable-collapse.js' %}"></script>
+  <script src="{% static 'js/template.js' %}"></script>
+  <script src="{% static 'js/settings.js' %}"></script>
+  <script src="{% static 'js/todolist.js' %}"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="{% static 'js/dashboard.js' %}"></script>
+  <script src="{% static 'js/Chart.roundedBarCharts.js' %}"></script>
+
+  <!-- End custom js for this page-->
+</body>
+
+</html>
+

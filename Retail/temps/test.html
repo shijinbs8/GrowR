@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Circular Gauge Example</title>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn3.devexpress.com/jslib/21.1.6/js/dx.all.js"></script>
+</head>
+<body>
+    <div id="circularGaugeContainer" style="height: 400px; margin: 0 auto;"></div>
+    <script>
+        $(function () {
+            $("#circularGaugeContainer").dxCircularGauge({
+                rangeContainer: {
+                    offset: 0,
+                    ranges: [
+                        { startValue: 0, endValue: 3999, color: '#CF010A' },
+                        { startValue: 4000, endValue: 7999, color: '#F57921' },
+                        { startValue: 8000, endValue: 12999, color: '#41A128' },
+                        { startValue: 13000, endValue: 15319, color: '#2DD700' },
+                        { startValue: 15319, endValue: 20000, color: '#4285f4' }
+                    ]
+                },
+                scale: {
+                    startValue: 0,
+                    endValue: 20000,
+                    majorTick: { tickInterval: 1000 },
+                    label: {
+                        format: 'number'
+                    }
+                },
+                title: {
+                    text: 'Rs',
+                    subtitle: 'test',
+                    position: 'top-center'
+                },
+                tooltip: {
+                    enabled: true,
+                    format: 'number',
+                    customizeText: function (arg) {
+                        return 'number ' + arg.valueText;
+                    }
+                },
+                subvalueIndicator: {
+                    type: 'textCloud',
+                    format: 'thousands',
+                    text: {
+                        format: 'number',
+                        customizeText: function (arg) {
+                            return 'Rs ' + arg.valueText;
+                        }
+                    }
+                },
+                value: 12515,
+                subvalues: [12515]
+            });
+        });
+    </script>
+</body>
+</html>

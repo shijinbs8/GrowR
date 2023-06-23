@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Beautiful Gauge Example</title>
+    <style>
+        .gauge-container {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            top: 30px;
+            left: 50%;
+            margin-left: -250px;
+            border-radius: 100%;
+            background-color: #eee;
+            transform-origin: 50% 50%;
+        }
+
+        .gauge-meter {
+            margin: 0;
+            padding: 0;
+        }
+
+        .gauge-meter > li {
+            width: 250px;
+            height: 250px;
+            list-style-type: none;
+            position: absolute;
+            border-top-left-radius: 250px;
+            border-top-right-radius: 0px;
+            transform-origin: 100% 100%;
+            transition: transform 0.5s;
+            pointer-events: none;
+        }
+
+        .gauge-meter .low {
+            transform: rotate(0deg);
+            background-color: #09B84F;
+            z-index: 3;
+        }
+
+        .gauge-meter .normal {
+            transform: rotate(47deg);
+            background-color: #FEE62A;
+            z-index: 2;
+        }
+
+        .gauge-meter .high {
+            transform: rotate(90deg);
+            background-color: #FA0E1C;
+            z-index: 1;
+        }
+
+        .gauge-dial,
+        .gauge-dial .inner {
+            width: 470px;
+            height: 470px;
+            position: relative;
+            top: 10px;
+            left: 5px;
+            border-radius: 100%;
+            border: 2px solid purple;
+            z-index: 10;
+            transition: transform 1s ease-in-out;
+            transform: rotate(0deg);
+        }
+
+        .gauge-dial .arrow {
+            width: 0;
+            height: 0;
+            position: absolute;
+            top: 214px;
+            left: 24px;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 32px solid #FFFFFF;
+            transform: rotate(-88deg);
+            z-index: 11;
+        }
+
+        .gauge-value {
+            font-family: 'Josefin Slab', serif;
+            font-size: 50px;
+            color: #ffffff;
+            position: absolute;
+            top: 142px;
+            left: 45%;
+            z-index: 12;
+        }
+    </style>
+</head>
+<body>
+    <div class="gauge-container">
+        <ul class="gauge-meter">
+            <li class="low"></li>
+            <li class="normal"></li>
+            <li class="high"></li>
+        </ul>
+        <div class="gauge-dial">
+            <div class="inner"></div>
+            <div class="arrow"></div>
+        </div>
+        <div class="gauge-value" id="gaugeValue">0</div>
+    </div>
+
+    <script>
+        function updateGauge(value) {
+            var maxRange = 100; // Maximum gauge range value
+
+            var gaugeDial = document.querySelector('.gauge-dial');
+            var gaugeValue = document.getElementById('gaugeValue');
+
+            // Calculate dial rotation angle
+            var angle = (value / maxRange) * 180;
+            gaugeDial.style.transform = 'rotate(' + angle + 'deg)';
+
+            gaugeValue.textContent = value;
+        }
+
+        // Example usage: Update gauge with random value
+        setInterval(function () {
+            var randomValue = Math.floor(Math.random() * 101); // Random value between 0 and 100
+            updateGauge(randomValue);
+        }, 2000);
+    </script>
+</body>
+</html>
